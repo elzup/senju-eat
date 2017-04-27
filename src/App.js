@@ -7,7 +7,7 @@ const data = {
 	stores: [
 		{ name: "松屋", start: '00:00', end: '24:00', },
 		{ name: "スーパーたなか", start: '09:00', end: '23:00', },
-		{ name: "武蔵屋", start: '11:00', end: '01:00', },
+		{ name: "武蔵屋", start: '11:00', end: '25:00', },
 	]
 };
 
@@ -16,12 +16,13 @@ class App extends Component {
 		const storeBoards = [];
 		data.stores.forEach((e) => {
 			const hm = e.end.split(':');
-			const h = parseInt(hm[0]);
+			const h = parseInt(hm[0], 10);
 			let end = null;
 			if (h < 24) {
 				end = moment(e.end, 'HH:mm')
 			} else {
-				end = moment((end - 24) + ':' + hm[1], 'HH:mm');
+				end = moment('0' + (h - 24) + ':' + hm[1], 'HH:mm');
+				console.log('0' + (h - 24) + ':' + hm[1]);
 				end.add(1, 'd');
 			}
 			storeBoards.push(
