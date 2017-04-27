@@ -15,12 +15,21 @@ class App extends Component {
 	render() {
 		const storeBoards = [];
 		data.stores.forEach((e) => {
+			const hm = e.end.split(':');
+			const h = parseInt(hm[0]);
+			let end = null;
+			if (h < 24) {
+				end = moment(e.end, 'HH:mm')
+			} else {
+				end = moment((end - 24) + ':' + hm[1], 'HH:mm');
+				end.add(1, 'd');
+			}
 			storeBoards.push(
 				<StoreBoard
 					key={e.name}
 					name={e.name}
 					start={moment(e.start, 'HH:mm')}
-					end={moment(e.end, 'HH:mm')}
+					end={end}
 				/>
 			);
 		});
