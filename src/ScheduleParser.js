@@ -18,7 +18,6 @@ export default class ScheduleParser {
 		if (!text) {
 			return false;
 		}
-		debugger;
 		return _.map(text.split(','), (e) => {
 			const [ start, end ] = e.split('-');
 			return {

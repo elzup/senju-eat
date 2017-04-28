@@ -1,6 +1,7 @@
 import React from 'react';
-import './App.css';
 import moment from 'moment'
+import _ from 'lodash';
+
 import { weekNames } from './ScheduleParser'
 
 moment.locale("ja",
@@ -26,43 +27,69 @@ class StoreBoard extends React.Component {
 		const { schedules, now } = props;
 
 		const today = schedules[weekNames[now.weekday]] || schedules['base'];
-		const isClose = now < today.start || today.end < now ;
-		today.each
+		let isClose = false;
+		let next = today[0].start;
+		_.each(today, (term) => {
+			if (now <= term.start) {
+				isClose = true;
+				next = term.start;
+				return false;
+			}
+			if (term.start < now || now < term.end) {
+				next = term.end;
+				return false;
+			}
+		});
+
 		this.state = {
 			today,
 			isClose,
+			next,
 		};
 	}
 
 	renderNextChange() {
-		const { today } = this.props;
-		const { isClose } = this.state;
+		const { isClose, next } = this.state;
 		if (isClose) {
 			return (
-				<p>開店まで { today.start.fromNow() }</p>
+				<p>開店まで { next.fromNow() }</p>
 			);
 		}
 		return (
-			<p>閉店まで { today.end.fromNow() }</p>
+			<p>閉店まで { next.fromNow() }</p>
 		);
 	}
 
+	renderDay(day) {
+		if (!day) {
+			return null;
+		}
+		const format = 'HH:mm';
+		const line = _.map(day, (term) => `${term.start.format(format)}-${term.end.format(format)}`).join(', ');
+		return (
+			<li>{line}</li>
+		);
+	};
+
+
 	render() {
 		console.log(this.props);
-		const { name, category } = this.props;
+		const { name, schedules, category } = this.props;
 		const { today, isClose } = this.state;
-		const format = 'HH:mm';
+		const days = _.map(schedules, this.renderDay);
 		return (
 			<div className="Store" style={{
-				width: "200px",
-				margin: "20px",
+				width: "250px",
+				margin: "20px 5px 5px",
 				background: isClose ? '#aaa' : 'orange',
 				borderRadius: "5px",
 				border: "solid 2px gray",
 			}}>
 				<h2>{ name }</h2>
 				{ this.renderNextChange() }
-				<p>{ today.start.format(format) } - { today.end.format(format) }</p>
+				<ul>
+					{days}
+				</ul>
 				<p>{ category}</p>
 			</div>
 		);
