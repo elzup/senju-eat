@@ -58,7 +58,7 @@ class App extends Component {
 					<p>北千住の学生のための</p>
 					<p>飲食店開店時間情報</p>
 				</div>
-				<div style={{ display: 'flex' }}>
+				<div style={{ display: 'flex', flexWrap: 'wrap' }}>
 					{ storeBoards }
 				</div>
 			</div>
