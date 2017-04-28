@@ -44,8 +44,8 @@ class StoreBoard extends React.Component {
 
 	render() {
 		console.log(this.props);
-		const { name, start, end } = this.props;
-		const format = 'HH時mm分';
+		const { name, start, endLabel } = this.props;
+		const format = 'HH:mm';
 		return (
 			<div className="Store" style={{
 				width: "200px",
@@ -56,7 +56,7 @@ class StoreBoard extends React.Component {
 			}}>
 				<h2>{ name }</h2>
 				{ this.renderNextChange() }
-				<p>{ start.format(format) } - { end.format(format) }</p>
+				<p>{ start.format(format) } - { endLabel }</p>
 			</div>
 		);
 	}

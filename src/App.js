@@ -46,6 +46,7 @@ class App extends Component {
 					key={e.name}
 					name={e.name}
 					start={moment(e.start, 'HH:mm')}
+					endLabel={e.end}
 					end={end}
 				/>
 			);
@@ -58,7 +59,7 @@ class App extends Component {
 					<p>北千住の学生のための</p>
 					<p>飲食店開店時間情報</p>
 				</div>
-				<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 					{ storeBoards }
 				</div>
 			</div>
