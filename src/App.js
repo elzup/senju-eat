@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment'
 import StoreBoard from './StoreBoard';
+import axios from 'axios';
 
 const data = {
 	stores: [
@@ -11,10 +12,25 @@ const data = {
 	]
 };
 
+
 class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			stores: [],
+		};
+	}
+
+	componentDidMount() {
+		const uri = 'https://script.google.com/macros/s/AKfycbx6rj2KFsMDTqn2svyLXksyNJykgrfjfo5-2uthyS9peGFlDYg/exec';
+		axios.get(uri, { 'Access-Control-Allow-Origin': '*' }).then((e) => {
+			this.setState({ stores: e.data });
+		});
+	}
+
 	render() {
 		const storeBoards = [];
-		data.stores.forEach((e) => {
+		this.state.stores.forEach((e) => {
 			const hm = e.end.split(':');
 			const h = parseInt(hm[0], 10);
 			let end = null;
