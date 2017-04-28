@@ -38,7 +38,7 @@ class App extends Component {
 				<StoreBoard
 					{ ...store }
 					now={this.state.now}
-					key={e.name}
+					key={store.name}
 				/>
 			);
 		});

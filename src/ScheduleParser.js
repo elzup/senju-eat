@@ -1,13 +1,26 @@
 import _ from 'lodash';
 import moment from 'moment'
 
-export const weekNames = ["base", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "holiday"];
+
+
+export const weekNames = {
+	"base": '通常',
+	"monday": '月',
+	"tuesday": '火',
+	"wednesday": '水',
+	"thursday": '木',
+	"friday": '金',
+	"saturday": '土',
+	"sunday": '日',
+	"holiday": '祝',
+};
+
 export default class ScheduleParser {
 
 	static parse(row) {
 		const { name, category } = row;
 		const schedules = {};
-		weekNames.forEach((name) => {
+		_.keys(weekNames).forEach((name) => {
 			schedules[name] = ScheduleParser.parseTimes(row[name]);
 		});
 		return { schedules, name, category };

@@ -26,7 +26,7 @@ class StoreBoard extends React.Component {
 		super(props);
 		const { schedules, now } = props;
 
-		const today = schedules[weekNames[now.weekday]] || schedules['base'];
+		const today = schedules[_.keys(weekNames)[now.weekday]] || schedules['base'];
 		let isClose = false;
 		let next = today[0].start;
 		_.each(today, (term) => {
@@ -60,14 +60,14 @@ class StoreBoard extends React.Component {
 		);
 	}
 
-	renderDay(day) {
+	renderDay(day, w) {
 		if (!day) {
 			return null;
 		}
 		const format = 'HH:mm';
 		const line = _.map(day, (term) => `${term.start.format(format)}-${term.end.format(format)}`).join(', ');
 		return (
-			<li>{line}</li>
+			<li key={w}>{weekNames[w]}{line}</li>
 		);
 	};
 
@@ -76,7 +76,8 @@ class StoreBoard extends React.Component {
 		console.log(this.props);
 		const { name, schedules, category } = this.props;
 		const { today, isClose } = this.state;
-		const days = _.map(schedules, this.renderDay);
+
+		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
 			<div className="Store" style={{
 				width: "250px",
@@ -85,12 +86,13 @@ class StoreBoard extends React.Component {
 				borderRadius: "5px",
 				border: "solid 2px gray",
 			}}>
+				<span>{ isClose ? "閉店" : "開店" }</span>
 				<h2>{ name }</h2>
 				{ this.renderNextChange() }
+				<p>{category}</p>
 				<ul>
 					{days}
 				</ul>
-				<p>{ category}</p>
 			</div>
 		);
 	}
