@@ -4,6 +4,7 @@ import moment from 'moment'
 import StoreBoard from './components/StoreBoard';
 import axios from 'axios';
 import ScheduleParser from './ScheduleParser'
+import Spinner from 'react-spinkit';
 
 const data = {
 	stores: [
@@ -52,6 +53,9 @@ class App extends Component {
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 					{ storeBoards }
+				</div>
+				<div hidden={this.state.stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
+					<Spinner spinnerName="wave" noFadeIn />
 				</div>
 			</div>
 		);
