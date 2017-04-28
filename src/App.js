@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment'
-import StoreBoard from './StoreBoard';
+import StoreBoard from './components/StoreBoard';
 import axios from 'axios';
+import ScheduleParser from './ScheduleParser'
 
 const data = {
 	stores: [
@@ -18,6 +19,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			stores: [],
+			now: moment.now(),
 		};
 	}
 
@@ -31,22 +33,12 @@ class App extends Component {
 	render() {
 		const storeBoards = [];
 		this.state.stores.forEach((e) => {
-			const hm = e.end.split(':');
-			const h = parseInt(hm[0], 10);
-			let end = null;
-			if (h < 24) {
-				end = moment(e.end, 'HH:mm')
-			} else {
-				end = moment('0' + (h - 24) + ':' + hm[1], 'HH:mm');
-				console.log('0' + (h - 24) + ':' + hm[1]);
-				end.add(1, 'd');
-			}
+			const store = ScheduleParser.parse(e);
 			storeBoards.push(
 				<StoreBoard
-					key={e.name}
-					name={e.name}
-					start={moment(e.start, 'HH:mm')}
-					end={end}
+					{ ...store }
+					now={this.state.now}
+					key={store.name}
 				/>
 			);
 		});
@@ -58,7 +50,7 @@ class App extends Component {
 					<p>北千住の学生のための</p>
 					<p>飲食店開店時間情報</p>
 				</div>
-				<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 					{ storeBoards }
 				</div>
 			</div>
