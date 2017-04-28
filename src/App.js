@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import moment from 'moment'
-import StoreBoard from './StoreBoard';
+import StoreBoard from './components/StoreBoard';
 import axios from 'axios';
 import ScheduleParser from './ScheduleParser'
 
