@@ -3,6 +3,7 @@ import './App.css';
 import moment from 'moment'
 import StoreBoard from './StoreBoard';
 import axios from 'axios';
+import ScheduleParser from './ScheduleParser'
 
 const data = {
 	stores: [
@@ -31,23 +32,11 @@ class App extends Component {
 	render() {
 		const storeBoards = [];
 		this.state.stores.forEach((e) => {
-			const hm = e.end.split(':');
-			const h = parseInt(hm[0], 10);
-			let end = null;
-			if (h < 24) {
-				end = moment(e.end, 'HH:mm')
-			} else {
-				end = moment('0' + (h - 24) + ':' + hm[1], 'HH:mm');
-				console.log('0' + (h - 24) + ':' + hm[1]);
-				end.add(1, 'd');
-			}
+			const store = ScheduleParser.parse(e);
 			storeBoards.push(
 				<StoreBoard
+					{ ...store }
 					key={e.name}
-					name={e.name}
-					start={moment(e.start, 'HH:mm')}
-					endLabel={e.end}
-					end={end}
 				/>
 			);
 		});
