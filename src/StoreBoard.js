@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import moment from 'moment'
+import { weekNames } from './ScheduleParser'
 
 moment.locale("ja",
 	{
@@ -22,41 +23,47 @@ class StoreBoard extends React.Component {
 
 	constructor(props) {
 		super(props);
-		const { start, end } = props;
-		const isClose = moment.now() < start || end < moment.now() ;
+		const { schedules, now } = props;
+
+		const today = schedules[weekNames[now.weekday]] || schedules['base'];
+		const isClose = now < today.start || today.end < now ;
+		today.each
 		this.state = {
+			today,
 			isClose,
 		};
 	}
 
 	renderNextChange() {
-		const { start, end } = this.props;
+		const { today } = this.props;
 		const { isClose } = this.state;
 		if (isClose) {
 			return (
-				<p>開店まで { start.fromNow() }</p>
+				<p>開店まで { today.start.fromNow() }</p>
 			);
 		}
 		return (
-			<p>閉店まで { end.fromNow() }</p>
+			<p>閉店まで { today.end.fromNow() }</p>
 		);
 	}
 
 	render() {
 		console.log(this.props);
-		const { name, start, endLabel } = this.props;
+		const { name, category } = this.props;
+		const { today, isClose } = this.state;
 		const format = 'HH:mm';
 		return (
 			<div className="Store" style={{
 				width: "200px",
 				margin: "20px",
-				background: this.state.isClose ? '#aaa' : 'orange',
+				background: isClose ? '#aaa' : 'orange',
 				borderRadius: "5px",
 				border: "solid 2px gray",
 			}}>
 				<h2>{ name }</h2>
 				{ this.renderNextChange() }
-				<p>{ start.format(format) } - { endLabel }</p>
+				<p>{ today.start.format(format) } - { today.end.format(format) }</p>
+				<p>{ category}</p>
 			</div>
 		);
 	}

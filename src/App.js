@@ -19,6 +19,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			stores: [],
+			now: moment.now(),
 		};
 	}
 
@@ -36,6 +37,7 @@ class App extends Component {
 			storeBoards.push(
 				<StoreBoard
 					{ ...store }
+					now={this.state.now}
 					key={e.name}
 				/>
 			);
