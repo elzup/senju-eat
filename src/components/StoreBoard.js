@@ -19,6 +19,26 @@ moment.locale("ja",
 		}
 	});
 
+const styles = {
+	today: {
+		borderLeft: 'solid lime',
+		paddingLeft: '5px',
+	},
+	term: {
+		paddingLeft: '5px',
+	},
+	nowTerm: {
+		fontWeight: 'bold',
+		paddingLeft: '5px',
+	},
+	card: {
+		width: "250px",
+		margin: "20px 5px 5px",
+		borderRadius: "5px",
+		padding: '20px',
+		boxShadow: '0 3px 5px',
+	},
+};
 
 class StoreBoard extends React.Component {
 
@@ -28,7 +48,7 @@ class StoreBoard extends React.Component {
 
 		const today = schedules[_.keys(weekNames)[now.weekday]] || schedules['base'];
 		let isClose = false;
-		let next = today[0].start.clone().add({d: 1});
+		let next = today[0].start.clone().add({ d: 1 });
 		_.each(today, (term) => {
 			if (now <= term.start) {
 				isClose = true;
@@ -63,13 +83,21 @@ class StoreBoard extends React.Component {
 	}
 
 	renderDay(day, w) {
+		const { today, next } = this.state;
+		const isToday = today === day;
 		if (!day) {
 			return null;
 		}
 		const format = 'HH:mm';
-		const line = _.map(day, (term) => `${term.start.format(format)}-${term.end.format(format)}`).join(', ');
+		const line = _.map(day, (term) =>
+			<span style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
+				{term.start.format(format)} - {term.end.format(format)}
+				</span>
+		);
 		return (
-			<li key={w}>{weekNames[w]}{line}</li>
+			<li key={w} style={isToday ? styles.today : {}}>
+				{weekNames[w]} {line}
+			</li>
 		);
 	};
 
@@ -81,13 +109,7 @@ class StoreBoard extends React.Component {
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
-			<div className="Store" style={{
-				width: "250px",
-				margin: "20px 5px 5px",
-				background: isClose ? '#aaa' : 'orange',
-				borderRadius: "5px",
-				border: "solid 2px gray",
-			}}>
+			<div className="Store" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
 				<span>{ isClose ? "閉店" : "開店" }</span>
 				<h2>{ name }</h2>
 				<p>{category}</p>

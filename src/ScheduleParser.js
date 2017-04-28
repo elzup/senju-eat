@@ -4,7 +4,7 @@ import moment from 'moment'
 
 
 export const weekNames = {
-	"base": '通常',
+	"base": '常',
 	"monday": '月',
 	"tuesday": '火',
 	"wednesday": '水',
