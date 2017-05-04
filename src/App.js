@@ -14,7 +14,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			stores: [],
-			now: moment(),
+			now: moment().add({d: 2}),
 		};
 	}
 
@@ -58,8 +58,9 @@ class App extends Component {
 						<p>北千住の学生のための</p>
 						<p>飲食店開店時間情報</p>
 					</div>
-					<div>
-						<p>{now.format('HH:mm')}</p>
+					<div className="timer">
+						<p>{now.format("MM/DD(ddd)")}</p>
+						<h2>{now.format("hh:mm")}</h2>
 					</div>
 				</div>
 				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>

@@ -6,6 +6,8 @@ import { weekNames, weekLib } from '../ScheduleParser'
 
 moment.locale("ja",
 	{
+		weekdays: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
+		weekdaysShort: ["日", "月", "火", "水", "木", "金", "土"],
 		relativeTime: {
 			future: 'あと%s',
 			past: '%s前',
@@ -16,12 +18,11 @@ moment.locale("ja",
 			hh: '%d時間',
 			d: '1日',
 			dd: '%d日',
-		}
+		},
 	});
 
 const styles = {
 	today: {
-		borderLeft: 'solid lime',
 		paddingLeft: '5px',
 	},
 	term: {
@@ -32,11 +33,14 @@ const styles = {
 		paddingLeft: '5px',
 	},
 	card: {
-		width: "250px",
-		margin: "20px 5px 5px",
-		borderRadius: "5px",
-		padding: '20px',
-		boxShadow: '0 3px 5px',
+		width: "213px",
+		margin: "3px",
+		padding: '5px',
+		boxShadow: '0 2px 1px',
+	},
+	name: {
+		padding: 0,
+		margin: 0,
 	},
 };
 
@@ -89,8 +93,9 @@ class StoreBoard extends React.Component {
 		}
 		const format = 'HH:mm';
 		const line = _.map(day, (term) =>
-			<span key={term.start.format(format)} style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
-				{term.start.format(format)} - {term.end.format(format)}
+			<span key={term.start.format(format)}
+						style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
+				{term.start.format(format)}-{term.end.format(format)}
 				</span>
 		);
 		return (
@@ -103,14 +108,12 @@ class StoreBoard extends React.Component {
 
 	render() {
 		const { name, schedules, category } = this.props;
-		const { today, isClose } = this.state;
+		const { isClose } = this.state;
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
 			<div className="Store" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
-				<span>{ isClose ? "閉店" : "開店" }</span>
-				<h2>{ name }</h2>
-				<p>{category}</p>
+				<h3 style={styles.name}>{ name }</h3>
 				{ this.renderNextChange() }
 				<ul>
 					{days}

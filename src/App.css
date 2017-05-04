@@ -13,19 +13,33 @@
   color: white;
   text-align: center;
   display: flex;
+  justify-content: center;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.timer {
+  margin-left: 10px;
+  width: 180px;
+}
+
+.timer h2 {
+  font-size: 3em;
+  margin-top: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+h3 {
+  font-size: 1em;
 }
