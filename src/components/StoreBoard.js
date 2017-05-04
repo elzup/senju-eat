@@ -62,16 +62,17 @@ class StoreBoard extends React.Component {
 			return null;
 		}
 		const format = 'HH:mm';
-		const line = _.map(day, (term) =>
+		const line = _.map(day.times, (term) =>
 			<div key={term.start.format(format)}
-						style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
+					 style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
 				{term.start.format(format)}-{term.end.format(format)}
-				</div>
+			</div>
 		);
+		const holiday = <div style={styles.term}>定休日</div>;
 		return (
 			<li key={w} className="day-line" style={isClose || isToday ? styles.today : styles.otherday}>
 				<div>{weekNames[w]}</div>
-				<div className="day-line-terms">{line}</div>
+				<div className="day-line-terms">{day.isRegularHoliday ? holiday : line}</div>
 			</li>
 		);
 	};

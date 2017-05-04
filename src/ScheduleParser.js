@@ -22,21 +22,27 @@ export default class ScheduleParser {
 		const { name, category } = row;
 		const schedules = {};
 		_.keys(weekNames).forEach((name) => {
-			schedules[name] = ScheduleParser.parseTimes(row[name]);
+			if (!row[name]) {
+				schedules[name] = false;
+				return;
+			}
+			schedules[name] = {
+				times: ScheduleParser.parseTimes(row[name]),
+				isRegularHoliday: row[name] === '00:00-00:00',
+			};
 		});
 		return { schedules, name, category };
 	}
 
 	// 'HH:mm-HH:mm,HH:mm-HH:mm' => [{start: moment, end: moment}]
 	static parseTimes(text) {
-		if (!text) {
-			return false;
-		}
 		return _.map(text.split(','), (e) => {
 			const [ start, end ] = e.split('-');
 			return {
 				start: ScheduleParser.parseTime(start),
 				end: ScheduleParser.parseTime(end),
+				start_raw: start,
+				end_raw: end,
 			};
 		});
 	}
