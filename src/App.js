@@ -90,26 +90,31 @@ class App extends Component {
 				<div className="App-header">
 					<div>
 						<h2>Eat Senju</h2>
-						<p>北千住の学生のための</p>
-						<p>飲食店開店時間情報</p>
+						<p>北千住の飯屋<br />営業時間</p>
 					</div>
 					<div className="timer">
 						<p>{now.format("MM/DD(ddd)")}</p>
 						<h2>{now.format("hh:mm")}</h2>
 					</div>
 				</div>
-				<div className="container">
-
-					<h2>Open</h2>
+				<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
+					<Spinner spinnerName="wave" noFadeIn />loading
+				</div>
+				<div hidden={stores.length === 0} className="container">
+					<h2>営業中</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ openStoreBoards }
 					</div>
-					<h2>Closed</h2>
+					<h2>閉店・休憩中</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ closedStoreBoards }
 					</div>
-					<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
-						<Spinner spinnerName="wave" noFadeIn />
+				</div>
+				<div className="App-footer">
+					<div className="footer-content">
+						<h3>ホーム画面に追加しよう！</h3>
+						<p style={{ marginBottom: "10px" }}>店選びで迷ったらすぐ開けるようにできます。</p>
+						<img src="home-sample.png" alt="" />
 					</div>
 				</div>
 			</div>

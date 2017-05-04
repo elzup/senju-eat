@@ -35,12 +35,6 @@ const styles = {
 		fontWeight: 'bold',
 		paddingLeft: '5px',
 	},
-	card: {
-		width: "213px",
-		margin: "3px",
-		padding: '5px',
-		boxShadow: '0 2px 1px',
-	},
 	name: {
 		padding: 0,
 		margin: 0,
@@ -69,14 +63,15 @@ class StoreBoard extends React.Component {
 		}
 		const format = 'HH:mm';
 		const line = _.map(day, (term) =>
-			<span key={term.start.format(format)}
+			<div key={term.start.format(format)}
 						style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
 				{term.start.format(format)}-{term.end.format(format)}
-				</span>
+				</div>
 		);
 		return (
-			<li key={w} style={isClose || isToday ? styles.today : styles.otherday}>
-				{weekNames[w]} {line}
+			<li key={w} className="day-line" style={isClose || isToday ? styles.today : styles.otherday}>
+				<div>{weekNames[w]}</div>
+				<div className="day-line-terms">{line}</div>
 			</li>
 		);
 	};
@@ -87,7 +82,7 @@ class StoreBoard extends React.Component {
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
-			<div className="Store" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
+			<div className="card" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
 				<h3 style={styles.name}>{ name }</h3>
 				<ul>
 					{days}
