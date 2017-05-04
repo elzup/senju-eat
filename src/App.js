@@ -54,8 +54,8 @@ class App extends Component {
 			const today = schedules[todayKey] || schedules['base'];
 			let isClose = false;
 			// 空いているか判定、次の切り替わり時間の判定
-			let next = today[0].start.clone().add({ d: 1 });
-			_.each(today, (term) => {
+			let next = today.times[0].start.clone().add({ d: 1 });
+			_.each(today.times, (term) => {
 				if (now <= term.start) {
 					isClose = true;
 					next = term.start;
