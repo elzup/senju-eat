@@ -112,7 +112,7 @@ class App extends Component {
 				</div>
 				<div className="App-footer">
 					<div>
-						ホーム画面に追加しよう！
+						スマホのホーム画面に追加しよう！
 					</div>
 				</div>
 			</div>
