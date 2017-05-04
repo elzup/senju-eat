@@ -1,61 +1,116 @@
 import React, { Component } from 'react';
-import './App.css';
-import moment from 'moment'
-import StoreBoard from './components/StoreBoard';
-import axios from 'axios';
-import ScheduleParser from './ScheduleParser'
 import Spinner from 'react-spinkit';
 
-const data = {
-	stores: [
-		{ name: "松屋", start: '00:00', end: '24:00', },
-		{ name: "スーパーたなか", start: '09:00', end: '23:00', },
-		{ name: "武蔵屋", start: '11:00', end: '25:00', },
-	]
-};
+import moment from 'moment'
+import axios from 'axios';
+import _ from 'lodash';
 
+import { weekLib } from './ScheduleParser'
+
+import StoreBoard from './components/StoreBoard';
+import ScheduleParser from './ScheduleParser'
+
+import './App.css';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			storesBase: [],
 			stores: [],
-			now: moment.now(),
+			now: moment(),
 		};
 	}
 
+	tick() {
+		this.setState({ now: this.state.now.clone().add({ m: 1 }) });
+		this.analyze();
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
+	}
+
 	componentDidMount() {
+		this.interval = setInterval(this.tick.bind(this), 1000 * 60);
+
 		const uri = 'https://script.google.com/macros/s/AKfycbx6rj2KFsMDTqn2svyLXksyNJykgrfjfo5-2uthyS9peGFlDYg/exec';
 		axios.get(uri, { 'Access-Control-Allow-Origin': '*' }).then((e) => {
-			this.setState({ stores: e.data });
+			const storesBase = e.data.map(ScheduleParser.parse);
+			this.setState({ storesBase });
+			this.analyze();
 		});
 	}
 
-	render() {
-		const storeBoards = [];
-		this.state.stores.forEach((e) => {
-			const store = ScheduleParser.parse(e);
-			storeBoards.push(
-				<StoreBoard
-					{ ...store }
-					now={this.state.now}
-					key={store.name}
-				/>
-			);
+	analyze() {
+		const { now } = this.state;
+		const stores = this.state.storesBase.map((e) => {
+			const { schedules } = e;
+			// 今日のスケジュール
+			const today = schedules[weekLib[now.clone().weekday()]] || schedules['base'];
+			let isClose = false;
+			// 空いているか判定、次の切り替わり時間の判定
+			let next = today[0].start.clone().add({ d: 1 });
+			_.each(today, (term) => {
+				if (now <= term.start) {
+					isClose = true;
+					next = term.start;
+					return false;
+				}
+				if (term.start < now && now < term.end) {
+					isClose = false;
+					next = term.end;
+					return false;
+				}
+				isClose = true;
+			});
+			return { ...e, today, isClose, next };
 		});
+		this.setState({ stores });
+	}
+
+	render() {
+		const { stores, now } = this.state;
+
+		const openStoreBoards = stores.filter(e => !e.isClose).map((store) => (
+			<StoreBoard
+				{ ...store }
+				key={store.name}
+			/>
+		));
+		const closedStoreBoards = stores.filter(e => e.isClose).map((store) => (
+			<StoreBoard
+				{ ...store }
+				key={store.name}
+			/>
+		));
 
 		return (
 			<div className="App">
 				<div className="App-header">
-					<h2>Eat Senju</h2>
-					<p>北千住の学生のための</p>
-					<p>飲食店開店時間情報</p>
+					<div>
+						<h2>Eat Senju</h2>
+						<p>北千住の学生のための</p>
+						<p>飲食店開店時間情報</p>
+					</div>
+					<div className="timer">
+						<p>{now.format("MM/DD(ddd)")}</p>
+						<h2>{now.format("hh:mm")}</h2>
+					</div>
 				</div>
-				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-					{ storeBoards }
-				</div>
-				<div hidden={this.state.stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
-					<Spinner spinnerName="wave" noFadeIn />
+				<div className="container">
+
+					<h2>Open</h2>
+					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+						{ openStoreBoards }
+					</div>
+					<h2>Closed</h2>
+					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+						{ closedStoreBoards }
+					</div>
+					<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
+						<Spinner spinnerName="wave" noFadeIn />
+					</div>
 				</div>
 			</div>
 		);

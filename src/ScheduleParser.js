@@ -2,6 +2,7 @@ import _ from 'lodash';
 import moment from 'moment'
 
 
+export const weekLib = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
 export const weekNames = {
 	"base": '常',
