@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment'
 import _ from 'lodash';
 
-import { weekNames } from '../ScheduleParser'
+import { weekNames, weekLib } from '../ScheduleParser'
 
 moment.locale("ja",
 	{
@@ -46,7 +46,7 @@ class StoreBoard extends React.Component {
 		super(props);
 		const { schedules, now } = props;
 
-		const today = schedules[_.keys(weekNames)[now.weekday]] || schedules['base'];
+		const today = schedules[weekLib[now.weekday]] || schedules['base'];
 		let isClose = false;
 		let next = today[0].start.clone().add({ d: 1 });
 		_.each(today, (term) => {
@@ -60,7 +60,6 @@ class StoreBoard extends React.Component {
 				next = term.end;
 				return false;
 			}
-			isClose = true;
 		});
 
 		this.state = {
@@ -94,6 +93,7 @@ class StoreBoard extends React.Component {
 				{term.start.format(format)} - {term.end.format(format)}
 				</span>
 		);
+		console.log(w);
 		return (
 			<li key={w} style={isToday ? styles.today : {}}>
 				{weekNames[w]} {line}
