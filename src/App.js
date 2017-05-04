@@ -111,8 +111,10 @@ class App extends Component {
 					</div>
 				</div>
 				<div className="App-footer">
-					<div>
-						スマホのホーム画面に追加しよう！
+					<div className="footer-content">
+						<h3>ホーム画面に追加しよう！</h3>
+						<p style={{ marginBottom: "10px" }}>店選びで迷ったらすぐ開けるようにできます。</p>
+						<img src="home-sample.png" alt="" />
 					</div>
 				</div>
 			</div>
