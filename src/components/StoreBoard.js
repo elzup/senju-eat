@@ -35,12 +35,6 @@ const styles = {
 		fontWeight: 'bold',
 		paddingLeft: '5px',
 	},
-	card: {
-		width: "213px",
-		margin: "3px",
-		padding: '5px',
-		boxShadow: '0 2px 1px',
-	},
 	name: {
 		padding: 0,
 		margin: 0,
@@ -87,7 +81,7 @@ class StoreBoard extends React.Component {
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
-			<div className="Store" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
+			<div className="card" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
 				<h3 style={styles.name}>{ name }</h3>
 				<ul>
 					{days}

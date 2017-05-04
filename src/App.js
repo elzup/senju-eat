@@ -90,8 +90,7 @@ class App extends Component {
 				<div className="App-header">
 					<div>
 						<h2>Eat Senju</h2>
-						<p>北千住の学生のための</p>
-						<p>飲食店開店時間情報</p>
+						<p>北千住の飯屋<br />営業時間</p>
 					</div>
 					<div className="timer">
 						<p>{now.format("MM/DD(ddd)")}</p>
