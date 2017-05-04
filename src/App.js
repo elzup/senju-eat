@@ -101,11 +101,11 @@ class App extends Component {
 					<Spinner spinnerName="wave" noFadeIn />loading
 				</div>
 				<div hidden={stores.length === 0} className="container">
-					<h2>Open</h2>
+					<h2>営業中</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ openStoreBoards }
 					</div>
-					<h2>Closed</h2>
+					<h2>閉店・休憩中</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ closedStoreBoards }
 					</div>

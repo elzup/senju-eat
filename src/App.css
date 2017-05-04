@@ -57,10 +57,20 @@ h3 {
 
 
 .card {
+  font-size: .8em;
   width: 213px;
   margin: 3px;
   padding: 5px;
   box-shadow: 0 2px 1px;
+}
+
+.day-line {
+  display: flex;
+  line-height: 20px;
+}
+
+.day-line-terms {
+  display: flex;
 }
 
 @media screen and (max-width: 320px) {
@@ -90,5 +100,18 @@ h3 {
   .container {
     padding-left: 5px;
     padding-right: 5px;
+    padding-bottom: 20px;
+  }
+
+  .card {
+    width: 130px;
+  }
+
+  .day-line {
+    justify-content: space-between;
+  }
+
+  .day-line-terms {
+    display: block;
   }
 }
