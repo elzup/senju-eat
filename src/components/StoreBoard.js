@@ -61,11 +61,11 @@ class StoreBoard extends React.Component {
 		if (!day) {
 			return null;
 		}
-		const format = 'HH:mm';
+		// const format = 'HH:mm';
 		const line = _.map(day.times, (term) =>
-			<div key={term.start.format(format)}
+			<div key={term.start_raw}
 					 style={(today === day && term.end === next) ? styles.nowTerm : styles.term }>
-				{term.start.format(format)}-{term.end.format(format)}
+				{term.start_raw}-{term.end_raw}
 			</div>
 		);
 		const holiday = <div style={styles.term}>定休日</div>;
