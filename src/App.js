@@ -19,8 +19,7 @@ class App extends Component {
 	}
 
 	tick() {
-		console.log(this.state.now);
-		this.setState({ now: this.state.now.add({ s: 1 }) });
+		this.setState({ now: this.state.now.add({ m: 1 }) });
 	}
 
 	componentWillUnmount() {
@@ -28,7 +27,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.interval = setInterval(this.tick.bind(this), 1000);
+		this.interval = setInterval(this.tick.bind(this), 1000 * 60);
 
 		const uri = 'https://script.google.com/macros/s/AKfycbx6rj2KFsMDTqn2svyLXksyNJykgrfjfo5-2uthyS9peGFlDYg/exec';
 		axios.get(uri, { 'Access-Control-Allow-Origin': '*' }).then((e) => {
