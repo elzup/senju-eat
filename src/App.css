@@ -73,7 +73,17 @@ h3 {
   display: flex;
 }
 
-@media screen and (max-width: 320px) {
+.App-footer {
+  background-color: #444;
+  height: 150px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 640px) {
 
   .App-header {
     height: 80px;
@@ -114,14 +124,4 @@ h3 {
   .day-line-terms {
     display: block;
   }
-}
-
-.App-footer {
-  background-color: #444;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  display: flex;
-  justify-content: center;
 }
