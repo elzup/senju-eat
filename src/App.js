@@ -72,7 +72,13 @@ class App extends Component {
 	render() {
 		const { stores, now } = this.state;
 
-		const storeBoards = stores.map((store) => (
+		const openStoreBoards = stores.filter(e => !e.isClose).map((store) => (
+			<StoreBoard
+				{ ...store }
+				key={store.name}
+			/>
+		));
+		const closedStoreBoards = stores.filter(e => e.isClose).map((store) => (
 			<StoreBoard
 				{ ...store }
 				key={store.name}
@@ -92,11 +98,19 @@ class App extends Component {
 						<h2>{now.format("hh:mm")}</h2>
 					</div>
 				</div>
-				<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-					{ storeBoards }
-				</div>
-				<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
-					<Spinner spinnerName="wave" noFadeIn />
+				<div className="container">
+
+					<h2>Open</h2>
+					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+						{ openStoreBoards }
+					</div>
+					<h2>Closed</h2>
+					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+						{ closedStoreBoards }
+					</div>
+					<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
+						<Spinner spinnerName="wave" noFadeIn />
+					</div>
 				</div>
 			</div>
 		);
