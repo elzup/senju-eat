@@ -115,3 +115,13 @@ h3 {
     display: block;
   }
 }
+
+.App-footer {
+  background-color: #444;
+  height: 150px;
+  padding: 20px;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

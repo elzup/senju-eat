@@ -110,6 +110,11 @@ class App extends Component {
 						{ closedStoreBoards }
 					</div>
 				</div>
+				<div className="App-footer">
+					<div>
+						ホーム画面に追加しよう！
+					</div>
+				</div>
 			</div>
 		);
 	}
