@@ -5,6 +5,8 @@ import moment from 'moment'
 import axios from 'axios';
 import _ from 'lodash';
 
+import { weekLib } from './ScheduleParser'
+
 import StoreBoard from './components/StoreBoard';
 import ScheduleParser from './ScheduleParser'
 
@@ -16,12 +18,12 @@ class App extends Component {
 		this.state = {
 			storesBase: [],
 			stores: [],
-			now: moment().add({d: 2}),
+			now: moment(),
 		};
 	}
 
 	tick() {
-		this.setState({ now: this.state.now.add({ m: 1 }) });
+		this.setState({ now: this.state.now.clone().add({ m: 1 }) });
 		this.analyze();
 	}
 
@@ -34,29 +36,48 @@ class App extends Component {
 
 		const uri = 'https://script.google.com/macros/s/AKfycbx6rj2KFsMDTqn2svyLXksyNJykgrfjfo5-2uthyS9peGFlDYg/exec';
 		axios.get(uri, { 'Access-Control-Allow-Origin': '*' }).then((e) => {
-			const storesBase = _.map(e.data, ScheduleParser.parse);
+			const storesBase = e.data.map(ScheduleParser.parse);
 			this.setState({ storesBase });
 			this.analyze();
 		});
 	}
 
 	analyze() {
-		this.setState({ stores: this.state.storesBase });
+		const { now } = this.state;
+		const stores = this.state.storesBase.map((e) => {
+			const { schedules } = e;
+			// 今日のスケジュール
+			const today = schedules[weekLib[now.clone().weekday()]] || schedules['base'];
+			let isClose = false;
+			// 空いているか判定、次の切り替わり時間の判定
+			let next = today[0].start.clone().add({ d: 1 });
+			_.each(today, (term) => {
+				if (now <= term.start) {
+					isClose = true;
+					next = term.start;
+					return false;
+				}
+				if (term.start < now && now < term.end) {
+					isClose = false;
+					next = term.end;
+					return false;
+				}
+				isClose = true;
+			});
+			return { ...e, today, isClose, next };
+		});
+		this.setState({ stores });
 	}
 
 	render() {
-		const storeBoards = [];
-		const {now, stores} = this.state;
+		const { stores, now } = this.state;
 
-		stores.forEach((store) => {
-			storeBoards.push(
-				<StoreBoard
-					{ ...store }
-					now={now}
-					key={store.name}
-				/>
-			);
-		});
+		const storeBoards = stores.map((store) => (
+			<StoreBoard
+				{ ...store }
+				key={store.name}
+			/>
+		));
 
 		return (
 			<div className="App">

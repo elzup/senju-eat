@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment'
 import _ from 'lodash';
 
-import { weekNames, weekLib } from '../ScheduleParser'
+import { weekNames } from '../ScheduleParser'
 
 moment.locale("ja",
 	{
@@ -46,35 +46,8 @@ const styles = {
 
 class StoreBoard extends React.Component {
 
-	constructor(props) {
-		super(props);
-		const { schedules, now } = props;
-
-		const today = schedules[weekLib[now.weekday]] || schedules['base'];
-		let isClose = false;
-		let next = today[0].start.clone().add({ d: 1 });
-		_.each(today, (term) => {
-			if (now <= term.start) {
-				isClose = true;
-				next = term.start;
-				return false;
-			}
-			if (term.start < now && now < term.end) {
-				isClose = false;
-				next = term.end;
-				return false;
-			}
-		});
-
-		this.state = {
-			today,
-			isClose,
-			next,
-		};
-	}
-
 	renderNextChange() {
-		const { isClose, next } = this.state;
+		const { isClose, next } = this.props;
 		if (isClose) {
 			return (
 				<p>開店まで { next.fromNow() }</p>
@@ -86,7 +59,7 @@ class StoreBoard extends React.Component {
 	}
 
 	renderDay(day, w) {
-		const { today, next } = this.state;
+		const { today, next } = this.props;
 		const isToday = today === day;
 		if (!day) {
 			return null;
@@ -107,8 +80,7 @@ class StoreBoard extends React.Component {
 
 
 	render() {
-		const { name, schedules } = this.props;
-		const { isClose } = this.state;
+		const { name, schedules, isClose } = this.props;
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));
 		return (
