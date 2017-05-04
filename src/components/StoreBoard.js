@@ -9,7 +9,7 @@ moment.locale("ja",
 		weekdays: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
 		weekdaysShort: ["日", "月", "火", "水", "木", "金", "土"],
 		relativeTime: {
-			future: 'あと%s',
+			future: '%s',
 			past: '%s前',
 			s: '%d秒',
 			m: '1分',
@@ -23,7 +23,10 @@ moment.locale("ja",
 
 const styles = {
 	today: {
-		paddingLeft: '5px',
+		color: "black",
+	},
+	otherday: {
+		color: "#bbb",
 	},
 	term: {
 		paddingLeft: '5px',
@@ -50,16 +53,16 @@ class StoreBoard extends React.Component {
 		const { isClose, next } = this.props;
 		if (isClose) {
 			return (
-				<p>開店まで { next.fromNow() }</p>
+				<p className="next-text">{ next.fromNow() }後に開店</p>
 			);
 		}
 		return (
-			<p>閉店まで { next.fromNow() }</p>
+			<p className="next-text">あと{ next.fromNow() }</p>
 		);
 	}
 
 	renderDay(day, w) {
-		const { today, next } = this.props;
+		const { isClose, today, next } = this.props;
 		const isToday = today === day;
 		if (!day) {
 			return null;
@@ -72,7 +75,7 @@ class StoreBoard extends React.Component {
 				</span>
 		);
 		return (
-			<li key={w} style={isToday ? styles.today : {}}>
+			<li key={w} style={isClose || isToday ? styles.today : styles.otherday}>
 				{weekNames[w]} {line}
 			</li>
 		);
@@ -86,10 +89,10 @@ class StoreBoard extends React.Component {
 		return (
 			<div className="Store" style={{ ...styles.card, background: isClose ? '#aaa' : 'white' }}>
 				<h3 style={styles.name}>{ name }</h3>
-				{ this.renderNextChange() }
 				<ul>
 					{days}
 				</ul>
+				{ this.renderNextChange() }
 			</div>
 		);
 	}

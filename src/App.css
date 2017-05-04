@@ -45,3 +45,12 @@ p {
 h3 {
   font-size: 1em;
 }
+
+.container {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.next-text {
+  text-align: right;
+}
