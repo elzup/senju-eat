@@ -5,6 +5,8 @@ import moment from 'moment'
 import axios from 'axios';
 import _ from 'lodash';
 
+import JapaneseHolidays from 'japanese-holidays';
+
 import { weekLib } from './ScheduleParser'
 
 import StoreBoard from './components/StoreBoard';
@@ -47,7 +49,9 @@ class App extends Component {
 		const stores = this.state.storesBase.map((e) => {
 			const { schedules } = e;
 			// 今日のスケジュール
-			const today = schedules[weekLib[now.clone().weekday()]] || schedules['base'];
+
+			const todayKey = JapaneseHolidays.isHoliday(now.toDate()) ? 'holiday' : weekLib[now.clone().weekday()];
+			const today = schedules[todayKey] || schedules['base'];
 			let isClose = false;
 			// 空いているか判定、次の切り替わり時間の判定
 			let next = today[0].start.clone().add({ d: 1 });

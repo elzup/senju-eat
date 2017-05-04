@@ -2919,6 +2919,10 @@ istanbul-reports@^1.0.2:
   dependencies:
     handlebars "^4.0.3"
 
+japanese-holidays@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/japanese-holidays/-/japanese-holidays-1.0.6.tgz#27c1c25b0443a33eafc780a38a80d0ecf9ff45bc"
+
 jest-changed-files@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-17.0.2.tgz#f5657758736996f590a51b87e5c9369d904ba7b7"
