@@ -107,7 +107,7 @@ class StoreBoard extends React.Component {
 
 
 	render() {
-		const { name, schedules, category } = this.props;
+		const { name, schedules } = this.props;
 		const { isClose } = this.state;
 
 		const days = _.map(_.keys(weekNames), (w) => this.renderDay(schedules[w], w));

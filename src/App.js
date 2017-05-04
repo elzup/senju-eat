@@ -3,6 +3,7 @@ import Spinner from 'react-spinkit';
 
 import moment from 'moment'
 import axios from 'axios';
+import _ from 'lodash';
 
 import StoreBoard from './components/StoreBoard';
 import ScheduleParser from './ScheduleParser'
@@ -13,6 +14,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			storesBase: [],
 			stores: [],
 			now: moment().add({d: 2}),
 		};
@@ -20,6 +22,7 @@ class App extends Component {
 
 	tick() {
 		this.setState({ now: this.state.now.add({ m: 1 }) });
+		this.analyze();
 	}
 
 	componentWillUnmount() {
@@ -31,16 +34,21 @@ class App extends Component {
 
 		const uri = 'https://script.google.com/macros/s/AKfycbx6rj2KFsMDTqn2svyLXksyNJykgrfjfo5-2uthyS9peGFlDYg/exec';
 		axios.get(uri, { 'Access-Control-Allow-Origin': '*' }).then((e) => {
-			this.setState({ stores: e.data });
+			const storesBase = _.map(e.data, ScheduleParser.parse);
+			this.setState({ storesBase });
+			this.analyze();
 		});
+	}
+
+	analyze() {
+		this.setState({ stores: this.state.storesBase });
 	}
 
 	render() {
 		const storeBoards = [];
 		const {now, stores} = this.state;
 
-		stores.forEach((e) => {
-			const store = ScheduleParser.parse(e);
+		stores.forEach((store) => {
 			storeBoards.push(
 				<StoreBoard
 					{ ...store }
