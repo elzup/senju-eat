@@ -75,13 +75,18 @@ h3 {
 
 .App-footer {
   background-color: #444;
-  height: 230px;
+  height: 280px;
   padding: 20px;
   color: white;
   text-align: center;
   display: flex;
   margin-top: 10px;
   justify-content: center;
+}
+
+.App-footer a, .App-footer a:visited {
+  color: white;
+  padding: 3px;
 }
 
 .footer-content {

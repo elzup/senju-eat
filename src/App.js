@@ -115,6 +115,14 @@ class App extends Component {
 						<h3>ホーム画面に追加しよう！</h3>
 						<p style={{ marginBottom: "10px" }}>店選びで迷ったらすぐ開けるようにできます。</p>
 						<img src="home-sample.png" alt="" />
+						<ul>
+							<li>
+								<a href="https://twitter.com/_elzup_">作者 elzup</a>
+								<a href="https://github.com/elzup/senju-eat">GitHub</a>
+								<a href="https://docs.google.com/spreadsheets/d/1FNCo_BrZ7i0Prt4gWN1Y_aW2nD_GyfuYwTiatC23c84/edit?usp=sharing">データ</a>
+							</li>
+						</ul>
+						<p>追加のリクエストなども受けてます。</p>
 					</div>
 				</div>
 			</div>
