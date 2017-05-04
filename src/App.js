@@ -98,8 +98,10 @@ class App extends Component {
 						<h2>{now.format("hh:mm")}</h2>
 					</div>
 				</div>
-				<div className="container">
-
+				<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
+					<Spinner spinnerName="wave" noFadeIn />loading
+				</div>
+				<div hidden={stores.length === 0} className="container">
 					<h2>Open</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ openStoreBoards }
@@ -107,9 +109,6 @@ class App extends Component {
 					<h2>Closed</h2>
 					<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 						{ closedStoreBoards }
-					</div>
-					<div hidden={stores.length > 0} style={{ width: '100px', margin: '10px auto', padding: '10px' }}>
-						<Spinner spinnerName="wave" noFadeIn />
 					</div>
 				</div>
 			</div>
