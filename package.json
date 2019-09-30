@@ -4,14 +4,14 @@
   "private": true,
   "homepage": "https://elzup.github.io/senju-eat",
   "dependencies": {
-    "axios": "^0.18.0",
-    "japanese-holidays": "^1.0.6",
-    "lodash": "^4.17.4",
-    "moment": "^2.18.1",
-    "react": "^15.5.4",
-    "react-d3-basic": "^1.6.11",
-    "react-dom": "^15.5.4",
-    "react-spinkit": "^2.1.2"
+    "axios": "0.18.1",
+    "japanese-holidays": "1.0.6",
+    "lodash": "4.17.15",
+    "moment": "2.24.0",
+    "react": "15.5.4",
+    "react-d3-basic": "1.6.11",
+    "react-dom": "15.5.4",
+    "react-spinkit": "2.1.2"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
