@@ -3694,6 +3694,10 @@ loader-utils@0.2.x, loader-utils@^0.2.11, loader-utils@^0.2.16, loader-utils@^0.
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
+loaders.css@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/loaders.css/-/loaders.css-0.1.2.tgz#3a9fb43726c73334a38142af9d0629019b658743"
+
 lodash._arraycopy@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._arraycopy/-/lodash._arraycopy-3.0.0.tgz#76e7b7c1f1fb92547374878a562ed06a3e50f6e1"
@@ -4994,11 +4998,12 @@ react-scripts@0.9.5:
   optionalDependencies:
     fsevents "1.0.17"
 
-react-spinkit@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/react-spinkit/-/react-spinkit-2.1.2.tgz#55c037bd73e99e4b69bf2e37c6227474e74a99f6"
+react-spinkit@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-spinkit/-/react-spinkit-3.0.0.tgz#31fdaf4e18177766c57d1b1f3330290f8492a85a"
   dependencies:
     classnames "^2.2.3"
+    loaders.css "^0.1.2"
     object-assign "^4.1.0"
     prop-types "^15.5.8"
 
