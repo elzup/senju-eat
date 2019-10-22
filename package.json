@@ -4,8 +4,8 @@
   "private": true,
   "homepage": "https://elzup.github.io/senju-eat",
   "dependencies": {
-    "axios": "0.18.1",
-    "japanese-holidays": "1.0.6",
+    "axios": "0.19.0",
+    "japanese-holidays": "1.0.9",
     "lodash": "4.17.15",
     "moment": "2.24.0",
     "react": "16.10.2",

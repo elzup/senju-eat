@@ -282,9 +282,9 @@ aws4@^1.2.1, aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
 
-axios@0.18.1:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
+axios@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.0.tgz#8e09bff3d9122e133f7b8101c8fbdd00ed3d2ab8"
   dependencies:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
@@ -3327,9 +3327,9 @@ istanbul-reports@^1.5.1:
   dependencies:
     handlebars "^4.0.3"
 
-japanese-holidays@1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/japanese-holidays/-/japanese-holidays-1.0.6.tgz#27c1c25b0443a33eafc780a38a80d0ecf9ff45bc"
+japanese-holidays@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/japanese-holidays/-/japanese-holidays-1.0.9.tgz#bb30d766f3c1f8d04d96da9b406c3bfc8a690b59"
 
 jest-changed-files@^17.0.2:
   version "17.0.2"
